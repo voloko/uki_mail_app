@@ -37,10 +37,10 @@ include('uki_mail_app/view/main.js');
 include('uki_mail_app/view/messageTable/dateColumn.js');
 include('uki_mail_app/view/toolbar.js');
 include('uki_mail_app/model/message.js');
-include('uki_mail_app/model/messageList.js');
 include('uki_mail_app/view/folders.js');
 include('uki_mail_app/view/folders/render.js');
 include('uki_mail_app/view/messageTable/drag.js');
+include('uki_mail_app/model/inbox.js');
 
 
 uki_mail_app.theme.imagePath = 'i/';
@@ -55,8 +55,9 @@ uki(
 if (window.messages) {
     uki('MessageTable').data(window.messages);
 } else {
-    uki.ajax({ url: '/messages/?callback=?', dataType: 'jsonp', success: function(data) { 
-        uki('MessageTable').data(data);
-    } })
+    var inbox = new uki_mail_app.model.Inbox({ name: 'INBOX' });
+    inbox.loadMessages(function() {
+        uki('MessageTable')[0].data(this.messages()).selectedIndex(0).lastClickIndex(0).focus();
+    });
 }
 })();

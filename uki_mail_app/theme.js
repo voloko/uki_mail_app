@@ -168,6 +168,14 @@
                     h: ["drag-h.png", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMoAAAAQCAYAAABXwODhAAAAU0lEQVRo3u3TQRGAMAwAwXjCR1EBQqoEZTGABjp1kMmPzz7WwM1cjCsXUAsRoDHKfN4DqBkFjAJGAaOAUcAoYBQwCmAUMAoYBf4e5bzzA2pGgYYNtJpkoHuF6t8AAAAASUVORK5CYII=", "drag-h.gif"], 
                     m: ["drag-m.png", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMoAAAAECAYAAADPh6BsAAAAKElEQVQYGe3BQQEAIBADoD3WyIYmsZ8lbOAVALrPXQG+GmDUAKMGGD34YQJREnniOQAAAABJRU5ErkJggg==", "drag-m.gif"] 
                 }, "8 8 8 8");
+            },
+            
+            'field': function() {
+                return new uki.background.Css({ fontWeight: 'bold', fontFamily: uki.theme.style('fontFamily'), color: '#666', textAlign: 'right' } );
+            },
+            
+            'value': function() {
+                return new uki.background.Css({ fontFamily: uki.theme.style('fontFamily') } );
             }
         },
         

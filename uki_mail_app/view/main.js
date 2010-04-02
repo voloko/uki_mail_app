@@ -114,7 +114,34 @@ uki.view.declare('uki_mail_app.view.Main', uki.view.Box, function(Base) {
                   ],
                   bottomChildViews: [
                     // message
-                    // { view: 'Box', rect: '100 10 100 100', anchors: 'left top', background: '#CCC', id: 'drop' }
+                    { view: 'ScrollPane', rect: '749 722', anchors: 'left top right bottom', scrollV: true, childViews: [
+                        { view: 'VFlow', rect: '10 0 729 78', anchors: 'left top right', background: 'cssBox(border-bottom: 1px solid #CCC)', 
+                          id: 'meta', childViews: [
+                            { view: 'Box', rect: '200 22', anchors: 'left top', childViews: [
+                                { view: 'Label', rect: '0 6 50 16', anchors: 'left top', background: 'theme(field)', text: 'From:' },
+                                { view: 'Label', rect: '60 6 140 16', anchors: 'left top rigth', text: '-', background: 'theme(value)',
+                                  field: 'from', textSelectable: true }
+                            ] },
+                            { view: 'Box', rect: '200 16', anchors: 'left top', childViews: [
+                                { view: 'Label', rect: '0 0 50 16', anchors: 'left top', background: 'theme(field)', text: 'Subject:' },
+                                { view: 'Label', rect: '60 0 140 16', anchors: 'left top rigth', text: '-', background: 'theme(value)',
+                                  field: 'subject', textSelectable: true, style: {fontWeight: 'bold'} }
+                            ] },
+                            { view: 'Box', rect: '200 16', anchors: 'left top', childViews: [
+                                { view: 'Label', rect: '0 0 50 16', anchors: 'left top', background: 'theme(field)', text: 'Date:' },
+                                { view: 'Label', rect: '60 0 140 16', anchors: 'left top rigth', text: '-', background: 'theme(value)',
+                                  field: 'recieved', textSelectable: true }
+                            ] },
+                            { view: 'Box', rect: '200 16', anchors: 'left top', childViews: [
+                                { view: 'Label', rect: '0 0 50 16', anchors: 'left top', background: 'theme(field)', text: 'To:' },
+                                { view: 'Label', rect: '60 0 140 16', anchors: 'left top rigth', text: '-', background: 'theme(value)',
+                                  field: 'to', textSelectable: true }
+                            ] }
+                          ] 
+                        },
+                        { view: 'Label', rect: '0 80 749 100', anchors: 'left top right', text: 'content', multiline: true, inset: '5 10',
+                            id: 'content', textSelectable: true }
+                    ] }
                   ]
                 }
               ]
@@ -131,31 +158,47 @@ uki.view.declare('uki_mail_app.view.Main', uki.view.Box, function(Base) {
             spacer.parent()._resizeChildViews();
             spacer.parent().layout();
         });
-        
+
+        var fields = {};
+        uki('[field]', this).each(function() {
+            fields[this.field] = this;
+        });
+
+        var messageTable = uki('MessageTable', this);
         var toolbar = uki('Toolbar:eq(0)', this);
+        var content = uki('#content', this);
+        var meta = uki('#meta', this);
+        
         uki('MessageTable List', this).bind('selection', function() {
-           var indexes = this.selectedIndexes();
-           uki('[togglable]', toolbar).disabled(false);
-           if (indexes.length == 0) uki('[not_empty]', toolbar).disabled(true);
-           if (indexes.length > 1) uki('[not_multy]', toolbar).disabled(true);
+            var indexes = this.selectedIndexes();
+            uki('[togglable]', toolbar).disabled(false);
+            if (indexes.length == 0) uki('[not_empty]', toolbar).disabled(true);
+            if (indexes.length > 1) uki('[not_multy]', toolbar).disabled(true);
+
+            meta.visible(false);
+            content.visible(false);
+            
+            if (indexes.length == 1) {
+                meta.visible(true).layout();
+                var row = this.selectedRows()[0];
+                fields.from.html(row.from() || '');
+                fields.to.html(row.to() || '');
+                fields.subject.html(row.subject() || '');
+                fields.recieved.html(new Date(row.recieved()*1000) || '');
+                setTimeout(function() {
+                    if (messageTable.selectedIndexes() != indexes) return;
+                    row.loadBody(function(text) {
+                        if (messageTable.selectedIndexes() != indexes) return;
+                        if (row.unread()) {
+                            row.unread(false);
+                            messageTable[0].redrawCell(indexes[0], 0);
+                        }
+                        content.visible(true).html(text).resizeToContents('height').layout();
+                    });
+                }, 42)
+            }
         }).trigger('selection');
-        
-        // uki('#drop', this).dragover(function(e) {
-        //     e.preventDefault();
-        //     e.dataTransfer.dropEffect = e.dataTransfer.effectAllowed.indexOf('copy') > -1 ? 'copy' : 'move';
-        //     console.log([e.dataTransfer.effectAllowed, e.dataTransfer.dropEffect]);
-        // }).drop(function(e) {
-        //     e.preventDefault();
-        //     console.log(e.dataTransfer);
-        //     for (var i=0; i < e.dataTransfer.files.length; i++) {
-        //         console.log(e.dataTransfer.files[i]);
-        //     }
-        //     for (var i=0; i < e.dataTransfer.types.length; i++) {
-        //         console.log(e.dataTransfer.types[i]);
-        //         console.log(e.dataTransfer.getData(e.dataTransfer.types[i]));
-        //     };
-        // });
-        
+
     }; 
    
 });

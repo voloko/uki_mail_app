@@ -40,13 +40,13 @@ uki.view.declare('uki_mail_app.view.MessageTable', uki.view.Table, function(Base
         this.columns([
             // { view: 'uki_mail_app.view.messageTable.Column', label: '<img src="' + uki.theme.imageSrc('tree-list-header') + '" style="margin:-1px 0 0 -2px;" />', width: 19, minWidth: 19 },
             { view: 'uki_mail_app.view.messageTable.Column', label: '<img src="' + uki.theme.imageSrc('unread-header') + '" style="margin:0 0 0 1px;" />', inset: '0 0', width: 19, minWidth: 19,
-                formatter: unreadFormatter },
-            { view: 'uki_mail_app.view.messageTable.Column', label: 'From', width: 200, minWidth: 150, resizable: true },
-            { view: 'uki_mail_app.view.messageTable.Column', label: 'Subject', width: 300, minWidth: 150, resizable: true },
+                formatter: unreadFormatter, key: 'unread' },
+            { view: 'uki_mail_app.view.messageTable.Column', label: 'From', width: 200, minWidth: 150, resizable: true, key: 'from' },
+            { view: 'uki_mail_app.view.messageTable.Column', label: 'Subject', width: 300, minWidth: 150, resizable: true, key: 'subject' },
             { view: 'uki_mail_app.view.messageTable.DateColumn', label: 'Date Recieved', width: 200, minWidth: 70, resizable: true, 
-                name: 'date', table: this },
+                name: 'date', table: this, key: 'recieved' },
             { view: 'uki_mail_app.view.messageTable.Column', label: '<img src="' + uki.theme.imageSrc('attachment-header') + '" style="margin:-1px 0 0 1px;" />', 
-                width: 30, minWidth: 30, formatter: attachmentFormatter, resizable: true }
+                width: 30, minWidth: 30, formatter: attachmentFormatter, resizable: true, key: 'attachments' }
         ]);
         
         var classPrefix = this._list.render().classPrefix,
