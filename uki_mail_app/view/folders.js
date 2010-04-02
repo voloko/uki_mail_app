@@ -1,0 +1,118 @@
+include('../view.js');
+include('../../frameworks/uki/uki-more/more/view/treeList.js');
+
+uki_mail_app.view.folders = {};
+
+uki.view.declare('uki_mail_app.view.Folders', uki.view.VFlow, function(Base) {
+    
+    this._setup = function() {
+        Base._setup.call(this);
+    };
+    
+    this.appendChild = function(c) {
+        this._bindListEvents(c);
+        return Base.appendChild.apply(this, arguments);
+    };
+    
+    this.insertBefore = function(c) {
+        this._bindListEvents(c);
+        return Base.insertBefore.apply(this, arguments);
+    };
+    
+    this.removeChild = function(c) {
+        this._unbindListEvents(c);
+        return Base.removeChild.apply(this, arguments);
+    };
+    
+    this.relayout = function() {
+        this._listUpdate();
+    };
+    
+    this.dropPreview = function() {
+        if (!this._dropPreview) {
+            this._dropPreview = uki({ view: 'Box', rect: '0 0 100 100', anchors: 'left top', style: {zIndex: 100}, background: 'theme(drop-preview)', visible: false })
+                .appendTo(this)[0];
+        }
+        return this._dropPreview;
+    };
+    
+    this.selectedRow = uki.newProp('_selectedRow', function(v) {
+        var p = -1;
+        uki('[data]', this).each(function(i, list) {
+            if ( (p = uki.inArray(v, list.data())) > -1 ) {
+                list.selectedIndex(p);
+                return false;
+            }
+        })
+    });
+    
+    this._createDom = function() {
+        Base._createDom.call(this);
+        uki.dom.bind(doc.body, 'mouseup drop dragend', uki.proxy(this._dragend, this));
+        uki.dom.bind(doc.body, 'dragenter', uki.proxy(this._dragenter, this));
+        uki.dom.bind(this.dom(), 'dragenter', uki.proxy(this._dragenter, this));
+    };
+    
+    this._unbindListEvents = function() {
+        c.unbind('open close', this._listUpdate);
+        c.unbind('open close', this._selectionUpdate);
+    };
+    
+    this._bindListEvents = function(c) {
+        if (c.selectedIndexes) {
+            c.bind('open close', uki.proxy(this._listUpdate, this));
+            c.bind('selection', uki.proxy(this._selectionUpdate, this, c));
+            c.bind('dragover', uki.proxy(this._dragover, this, c));
+        }
+    };
+    
+    this._dragend = function(e) {
+        this.dropPreview().visible(false);
+    };
+    
+    this._dragenter = function(e) {
+        if (!uki.dom.contains(this.dom(), e.target)) {
+            this.dropPreview().visible(false);
+        }
+    };
+    
+    this._dragover = function(c, e) {
+        var o = uki.dom.offset(c.dom()),
+            y = e.pageY - o.y,
+            p = y / c.rowHeight() << 0,
+            row = c.listData()[p];
+            
+        if (this._lastRow == row) return;
+        this._lastRow = row;
+        if (row && row.dropTarget) {
+            this.dropPreview().visible(true);
+            this.dropPreview().rect(new uki.geometry.Rect(0, c.rect().y + p * c.rowHeight() - 1, c.rect().width, c.rowHeight())).layout();
+        } else {
+            this.dropPreview().visible(false);
+        }
+        if (this._openTimeout) {
+            clearTimeout(this._openTimeout);
+            this._openTimeout = null;
+        }
+        if (row && row.children) {
+            this._openTimeout = setTimeout(uki.proxy(function() {
+                c.open(p);
+            }, this), 1000);
+        }
+    };
+    
+    this._selectionUpdate = function(c, e) {
+        uki('[selectedIndexes]', this).each(function(i, list) {
+            if (list != c) list.clearSelection();
+        });
+        this._selectedRow = c.selectedRows()[0];
+        this.trigger('selection');
+    };
+    
+    this._listUpdate = function() {
+        uki('[selectedIndexes]', this).resizeToContents('height');
+        this.resizeToContents('height');
+        this.layout();
+        if (this.parent()) this.parent().layout();
+    };
+});
