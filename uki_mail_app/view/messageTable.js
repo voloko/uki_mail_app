@@ -16,6 +16,7 @@ uki.view.declare('uki_mail_app.view.MessageTable', uki.view.Table, function(Base
     var attachmentTemplate = new uki.theme.Template(
         '<div class="attachment"></div>${count}'
     );
+    
     function attachmentFormatter (v) {
         v*=1;
         if (!v) return '';
@@ -23,6 +24,17 @@ uki.view.declare('uki_mail_app.view.MessageTable', uki.view.Table, function(Base
             count: v
         });
     }
+    
+    this.mailbox = uki.newProp('_mailbox', function(m) {
+        if (this._mailbox) this._mailbox.unbind('change.messages', this._messagesChange);
+        this._mailbox = m;
+        this.data(m.messages());
+        m.bind('change.messages', uki.proxy(this._messagesChange, this));
+    });
+    
+    this._messagesChange = function() {
+        this.data(this.mailbox().messages());
+    };
     
     this._createDom = function() {
         Base._createDom.call(this);
@@ -41,7 +53,7 @@ uki.view.declare('uki_mail_app.view.MessageTable', uki.view.Table, function(Base
             // { view: 'uki_mail_app.view.messageTable.Column', label: '<img src="' + uki.theme.imageSrc('tree-list-header') + '" style="margin:-1px 0 0 -2px;" />', width: 19, minWidth: 19 },
             { view: 'uki_mail_app.view.messageTable.Column', label: '<img src="' + uki.theme.imageSrc('unread-header') + '" style="margin:0 0 0 1px;" />', inset: '0 0', width: 19, minWidth: 19,
                 formatter: unreadFormatter, key: 'unread' },
-            { view: 'uki_mail_app.view.messageTable.Column', label: 'From', width: 200, minWidth: 150, resizable: true, key: 'from' },
+            { view: 'uki_mail_app.view.messageTable.Column', label: 'From', width: 200, minWidth: 150, resizable: true, key: 'fromName' },
             { view: 'uki_mail_app.view.messageTable.Column', label: 'Subject', width: 300, minWidth: 150, resizable: true, key: 'subject' },
             { view: 'uki_mail_app.view.messageTable.DateColumn', label: 'Date Recieved', width: 200, minWidth: 70, resizable: true, 
                 name: 'date', table: this, key: 'recieved' },
@@ -94,12 +106,13 @@ uki.view.declare('uki_mail_app.view.MessageTable', uki.view.Table, function(Base
     };
     
     this._dragstart = function(e) {
-        e.dataTransfer.effectAllowed = 'all';
-        e.dataTransfer.setData('text/uri-list', 'xxx.html');
-        e.dataTransfer.setData('text/html', '<b>yuppy</b> 111');
-        e.dataTransfer.setData('text/plain', '<b>yuppy</b> 111');
-        e.dataTransfer.setData('File', '<b>yuppy</b> 111');
-        e.dataTransfer.setDragImage(this.getDragImage(), 10, 10);
+        if (!this.selectedIndexes().length) return;
+        var dt = e.dataTransfer;
+        dt.effectAllowed = 'move';
+        dt.setData('text/plain', uki.map(this.selectedRows(), 'summary').join('\n'));
+        dt.setData('uki/messages', uki.map(this.selectedRows(), 'id').join(','));
+        dt.setData('uki/mailbox', this.mailbox().id());
+        dt.setDragImage(this.getDragImage(), 10, 10);
     };
     
     var processingWidths = false;

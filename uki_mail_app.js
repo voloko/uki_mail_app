@@ -29,18 +29,21 @@ include('uki_mail_app/theme.js');
 include('frameworks/uki/uki-data/ajax.js');
 include('frameworks/uki/uki-data/model.js');
 
+include('uki_mail_app/const.js');
 include('uki_mail_app/view/toolbarButton.js');
 include('uki_mail_app/view/messageTable.js');
 include('uki_mail_app/view/searchField.js');
 include('uki_mail_app/view/messageTable/column.js');
-include('uki_mail_app/view/main.js');
+include('uki_mail_app/layout/main.js');
 include('uki_mail_app/view/messageTable/dateColumn.js');
 include('uki_mail_app/view/toolbar.js');
 include('uki_mail_app/model/message.js');
 include('uki_mail_app/view/folders.js');
 include('uki_mail_app/view/folders/render.js');
 include('uki_mail_app/view/messageTable/drag.js');
-include('uki_mail_app/model/inbox.js');
+include('uki_mail_app/model/mailbox.js');
+
+include('uki_mail_app/controller/main.js');
 
 
 uki_mail_app.theme.imagePath = 'i/';
@@ -48,16 +51,6 @@ uki_mail_app.theme.imagePath = 'i/';
 // skip interface creation if we're testing
 if (window.TESTING) return;
 
-uki(
-    { view: 'uki_mail_app.view.Main', rect: '1000 1000', anchors: 'left top right bottom' }
-).attachTo(window, '1000 1000');
+uki_mail_app.controller.main();
 
-if (window.messages) {
-    uki('MessageTable').data(window.messages);
-} else {
-    var inbox = new uki_mail_app.model.Inbox({ name: 'INBOX' });
-    inbox.loadMessages(function() {
-        uki('MessageTable')[0].data(this.messages()).selectedIndex(0).lastClickIndex(0).focus();
-    });
-}
 })();
