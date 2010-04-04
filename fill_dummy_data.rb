@@ -18,9 +18,9 @@ message = {
 }
 r.rpush 'mailbox:INBOX:messages', 1
 r.set 'message:1', message.to_json
-r.set 'message:1:body', File.read('tmp/message.txt')
+r.set 'message:1:body', File.read('dummy/message.txt')
 
-content = CSV.parse(File.read('tmp/messages.csv'), '|').sort {|b, a| a[3] <=> b[3] }
+content = CSV.parse(File.read('dummy/messages.csv'), '|').sort {|b, a| a[3] <=> b[3] }
 content.each_with_index do |row, i|
   id = i + 2
   message = { 

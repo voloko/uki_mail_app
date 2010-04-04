@@ -1,0 +1,22 @@
+Hello. My name is Vladimir Kolesnikov. 
+And I'm the developer of ukijs framework. Ukijs matured and I put it to the test.
+The idea was to replicate mac Mail.app core experience in the browser 
+with as much attention to details as possible and acceptable performance.
+
+The whole thing took me about 15 hours. Which includes everything from
+building custom views, layouts, models, dummy server and deployment.
+This is particularly exciting since it means that you can make a full 
+desktop experience in less than a week, on your own.
+
+You can see it now. Select messages in the list. Drag and drop them to a folder.
+And if your browser supports it you can even drop the messages on your desktop.
+
+When I tell about details I mean thins like this:
+– resize date column and see how its contents changes
+– move the vertical split pane and see how the buttons on the toolbar react.
+
+So try it out. And if you're a web-developer go to ukijs.org and start hacking.
+Everything is free and open-source. 
+
+Sources for mail app: http://github.com/voloko/uki_mail_app
+Ukijs project: http://github.com/voloko/uki
