@@ -41,6 +41,7 @@ uki.view.declare('uki_mail_app.view.MessageTable', uki.view.Table, function(Base
         this._scrollPane.scrollableH(false);
         this._scrollPane.scrollV(true);
         this._header.background('theme(table-header)');
+        this._list.background('white');
         this._list.render(new uki_mail_app.view.messageTable.Render(this));
         this._list.draggable(true).bind('dragstart', uki.proxy(this._dragstart, this));
         

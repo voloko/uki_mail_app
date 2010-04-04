@@ -1,22 +1,30 @@
 Hello. My name is Vladimir Kolesnikov. 
 And I'm the developer of ukijs framework. Ukijs matured and I put it to the test.
-The idea was to replicate mac Mail.app core experience in the browser 
+The idea was to replicate Mac Mail.app core experience in the browser 
 with as much attention to details as possible and acceptable performance.
 
-The whole thing took me about 15 hours. Which includes everything from
+The whole thing took me about 15 hours. Which includes
 building custom views, layouts, models, dummy server and deployment.
-This is particularly exciting since it means that you can make a full 
-desktop experience in less than a week, on your own.
+This is particularly exciting since it means that you can make a  
+desktop-class app in less than a week, on your own.
+
+<object width="600" height="375"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=10677818&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id=10677818&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="600" height="375"></embed></object><p><a href="http://vimeo.com/10677818">Web prototype of Mail.app</a> from <a href="http://vimeo.com/user657918">Volodya Kolesnikov</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
 
 You can see it now. Select messages in the list. Drag and drop them to a folder.
 And if your browser supports it you can even drop the messages on your desktop.
 
-When I tell about details I mean thins like this:
+
+Apple is praised for attention to details. And there's plenty of them in the Mail.app.
+I replicated some of them. Examples:
 – resize date column and see how its contents changes
 – move the vertical split pane and see how the buttons on the toolbar react.
 
-So try it out. And if you're a web-developer go to ukijs.org and start hacking.
-Everything is free and open-source. 
+
+NB: This is a demo. Not a fully functionally app. It is intended to show what you
+browser is capable of. So try it out. And if you're a web-developer go to 
+ukijs.org and start hacking. Code is free and open-source. 
 
 <a href="http://github.com/voloko/uki_mail_app">Sources for mail app</a>
 <a href="http://github.com/voloko/uki">Ukijs project</a>
+
+
