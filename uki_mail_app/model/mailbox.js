@@ -32,7 +32,7 @@ uki_mail_app.model.Mailbox = uki.newClass(uki.data.Model, function(Base) {
     
     this.loadNewMessages = uki.data.model.newLoader('messages', {
         url: function() {
-            return '/mailbox/' + this.id() + '/messages/?callback=?';
+            return 'mailbox/' + this.id() + '/messages/?callback=?';
         },
         data: function() { 
             return { 

@@ -143,7 +143,7 @@ uki_mail_app.controller.main = function() {
     }
 
     uki.ajax({
-        url: '/mailbox/?callback=?',
+        url: 'mailbox/?callback=?',
         dataType: 'jsonp',
         success: function(maiboxes) {
             MAILBOXES = uki.map(maiboxes, createMailbox);
