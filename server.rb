@@ -26,7 +26,7 @@ get '/mailbox/' do
       { :id => 'gmail:all_mail',  :unread => 0,   :title => 'All Mail'  },
       { :id => 'gmail:draft',     :unread => 0,   :title => 'Drafts'    },
       { :id => 'gmail:sent_mail', :unread => 0,   :title => 'Sent Mail' },
-      { :id => 'gmail:span',      :unread => 0,   :title => 'Span'      },
+      { :id => 'gmail:spam',      :unread => 0,   :title => 'Spam'      },
       { :id => 'gmail:starred',   :unread => 0,   :title => 'Starred'   },
       { :id => 'gmail:trash',     :unread => 0,   :title => 'Trash'     },
     ] },

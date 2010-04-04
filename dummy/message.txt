@@ -18,5 +18,5 @@ When I tell about details I mean thins like this:
 So try it out. And if you're a web-developer go to ukijs.org and start hacking.
 Everything is free and open-source. 
 
-Sources for mail app: http://github.com/voloko/uki_mail_app
-Ukijs project: http://github.com/voloko/uki
+<a href="http://github.com/voloko/uki_mail_app">Sources for mail app</a>
+<a href="http://github.com/voloko/uki">Ukijs project</a>
