@@ -44,13 +44,21 @@ include('uki_mail_app/view/messageTable/drag.js');
 include('uki_mail_app/model/mailbox.js');
 
 include('uki_mail_app/controller/main.js');
+include('uki_mail_app/controller/editor.js');
+include('uki_mail_app/layout/editor.js');
 
 
-uki_mail_app.theme.imagePath = 'i/';
+uki_mail_app.theme.imagePath = 'i/theme/';
 
 // skip interface creation if we're testing
 if (window.TESTING) return;
 
-uki_mail_app.controller.main();
+var action;
+if (action = location.href.match(/[?&]action=([^&]+)/)) {
+    var messages = location.href.match(/[?&]messages=([^&]+)/);
+    uki_mail_app.controller.editor(action[1], messages && messages[1].split('-') || []);
+} else {
+    uki_mail_app.controller.main();
+}
 
 })();

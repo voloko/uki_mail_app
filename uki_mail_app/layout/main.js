@@ -15,7 +15,7 @@ uki_mail_app.layout.main = function() {
             childViews: [
                 { view: 'Box', rect: '60 23', anchors: 'left top', textSelectable: false, childViews:
                     { view: 'uki_mail_app.view.ToolbarButton', label: 'Get Mail', rect: '10 0 41 23', anchors: 'left top', backgroundPrefix: 'toolbar-button-full-',
-                        icon: uki.theme.imageSrc('toolbar-get-mail') }
+                        icon: uki.theme.imageSrc('toolbar-get-mail'), action: 'get-mail' }
                 },
 
                 { view: 'Box', rect: '100 23', anchors: 'left top', spacer: true, minSize: '30 0', prefferedWidth: '190'  },
@@ -25,25 +25,25 @@ uki_mail_app.layout.main = function() {
                     { view: 'Box', rect: '110 23', anchors: 'left top',
                     childViews: [
                         { view: 'uki_mail_app.view.ToolbarButton', rect: '0 0 55 23', label: 'Delete', anchors: 'left top', backgroundPrefix: 'toolbar-button-left-',
-                            icon: uki.theme.imageSrc('toolbar-delete'), togglable: 1, not_empty: 1 },
+                            icon: uki.theme.imageSrc('toolbar-delete'), togglable: 1, not_empty: 1, action: 'delete' },
                         { view: 'uki_mail_app.view.ToolbarButton', rect: '54 0 55 23', label: 'Junk', anchors: 'left top', backgroundPrefix: 'toolbar-button-right-',
-                            icon: uki.theme.imageSrc('toolbar-junk'), togglable: 1, not_empty: 1 }
+                            icon: uki.theme.imageSrc('toolbar-junk'), togglable: 1, not_empty: 1, action: 'junk' }
                     ] },
                 
                     { view: 'Box', rect: '351 23', anchors: 'left top',
                     childViews: [
                         { view: 'uki_mail_app.view.ToolbarButton', rect: '10 0 55 23', label: 'Reply', anchors: 'left top', backgroundPrefix: 'toolbar-button-left-',
-                            icon: uki.theme.imageSrc('toolbar-reply'), togglable: 1, not_empty: 1, not_multy: 1 },
+                            icon: uki.theme.imageSrc('toolbar-reply'), togglable: 1, not_empty: 1, not_multy: 1, action: 'reply' },
                         { view: 'uki_mail_app.view.ToolbarButton', rect: '64 0 55 23', label: 'Reply All', anchors: 'left top', backgroundPrefix: 'toolbar-button-mid-',
-                            icon: uki.theme.imageSrc('toolbar-reply-all'), togglable: 1, not_empty: 1, not_multy: 1 },
+                            icon: uki.theme.imageSrc('toolbar-reply-all'), togglable: 1, not_empty: 1, not_multy: 1, action: 'reply-all' },
                         { view: 'uki_mail_app.view.ToolbarButton', rect: '118 0 55 23', label: 'Forward', anchors: 'left top', backgroundPrefix: 'toolbar-button-right-',
-                            icon: uki.theme.imageSrc('toolbar-forward'), togglable: 1, not_empty: 1 },
+                            icon: uki.theme.imageSrc('toolbar-forward'), togglable: 1, not_empty: 1, action: 'forward' },
                         
                         { view: 'uki_mail_app.view.ToolbarButton', label: 'Redirect', rect: '190 0 41 23', anchors: 'left top', backgroundPrefix: 'toolbar-button-full-',
-                            icon: uki.theme.imageSrc('toolbar-redirect'), togglable: 1, not_empty: 1, not_multy: 1 },
+                            icon: uki.theme.imageSrc('toolbar-redirect'), togglable: 1, not_empty: 1, not_multy: 1, action: 'redirect' },
 
                         { view: 'uki_mail_app.view.ToolbarButton', label: 'New Message', rect: '260 0 41 23', anchors: 'left top', backgroundPrefix: 'toolbar-button-full-',
-                            icon: uki.theme.imageSrc('toolbar-new') }
+                            icon: uki.theme.imageSrc('toolbar-new'), action: 'new-message' }
                     ] },
                 
                     

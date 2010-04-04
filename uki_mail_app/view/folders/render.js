@@ -19,7 +19,7 @@ uki_mail_app.view.folders.Render = uki.newClass(uki.more.view.treeList.Render, f
         var style = new uki.theme.Template(
             // '.${classPrefix}-table, .${classPrefix}-table td { border-collapse: collapse; padding: 0; width: 100%; } ' +
             '.${classPrefix}-unread { position: absolute; padding: 2px 4px; min-width: 14px; text-align: center; right: 5px; top: 3px; color: #FFF; background: #94A7C8; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; line-height: 10px; font-size: 10px; font-weight: bold;  } ' +
-            '.${classPrefix}-row { color: #000; position:relative; padding:4px 3px 3px 22px; white-space: nowrap; text-overflow: ellipsis; } ' +
+            '.${classPrefix}-row { color: #000; position:relative; padding: 4px 3px 3px 22px; white-space: nowrap; text-overflow: ellipsis; *zoom: 1; } ' +
             '.${classPrefix}-toggle { overflow: hidden; position:absolute; left:-14px; top:5px; width: 10px; height:9px; } ' +
             '.${classPrefix}-toggle i { display: block; position:absolute; left: 0; top: 0; width:20px; height:18px; background: url(${imageSrc});} ' +
             '.${classPrefix}-selected-blured .${classPrefix}-row { color: #FFF; } ' +

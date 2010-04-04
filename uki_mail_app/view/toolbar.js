@@ -16,16 +16,22 @@ uki.view.declare('uki_mail_app.view.Toolbar', uki.view.HFlow, function(Base) {
         this._resizeChildViews = this['_algorithm' + name];
     };
     
-    this._resizeChildViews = this._algorithmResizeSpacer = function() {
+    function changeWidth (rect, w) {
+        rect = rect.clone();
+        rect.width = w;
+        return rect;
+    }
+    
+    this._resizeChildViews = this._algorithmResizeSpacer = function(oldRect) {
         if (this._contentChanged) this.initWidths();
         // expected rect
         var diff = this.rect().width - this.minSize().width;
-        this._spacer.width(this._spacer.minSize().width + diff);
-        Base._resizeChildViews.call(this);
-        this._rect.width = this.childViews()[ this.childViews().length - 1].maxX();
+        this._spacer.rect( changeWidth(this._spacer.rect(), this._spacer.minSize().width + diff) );
+        Base._resizeChildViews.call(this, oldRect);
+        // this._rect.width = this.childViews()[ this.childViews().length - 1].maxX();
     };
     
-    this._algorithmResizeLast = function() {
+    this._algorithmResizeLast = function(oldRect) {
         var lastChild = this.childViews()[this.childViews().length - 1 ];
         
         if (this._contentChanged) {
@@ -38,14 +44,14 @@ uki.view.declare('uki_mail_app.view.Toolbar', uki.view.HFlow, function(Base) {
             flex = prefferedWidth - minWidth,
             diff = this.rect().width - this.minSize().width - flex;
         if (diff < 0) {
-            this._spacer.width(prefferedWidth + diff);
-            lastChild.width(lastChild.minSize().width);
+            this._spacer.rect( changeWidth(this._spacer.rect(), prefferedWidth + diff) );
+            lastChild.rect( changeWidth(lastChild.rect(), lastChild.minSize().width) );
         } else {
-            this._spacer.width(prefferedWidth);
-            lastChild.width(lastChild.minSize().width + diff);
+            this._spacer.rect( changeWidth(this._spacer.rect(), prefferedWidth) );
+            lastChild.rect( changeWidth(lastChild.rect(), lastChild.minSize().width + diff) );
         }
-        Base._resizeChildViews.call(this);
-        this._rect.width = lastChild.maxX();
+        Base._resizeChildViews.call(this, oldRect);
+        // this._rect.width = lastChild.maxX();
     };
     
 });

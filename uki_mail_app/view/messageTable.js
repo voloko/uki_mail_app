@@ -45,9 +45,8 @@ uki.view.declare('uki_mail_app.view.MessageTable', uki.view.Table, function(Base
         this._list.draggable(true).bind('dragstart', uki.proxy(this._dragstart, this));
         
         // preload images
-        this.getDragImage(2).left(-999).attachTo(window);
-        this.getDragImage(100).left(-999).attachTo(window);
-        
+        this.getDragImage(2).x(-999).attachTo(window);
+        this.getDragImage(100).x(-999).attachTo(window);
             
         this.columns([
             // { view: 'uki_mail_app.view.messageTable.Column', label: '<img src="' + uki.theme.imageSrc('tree-list-header') + '" style="margin:-1px 0 0 -2px;" />', width: 19, minWidth: 19 },

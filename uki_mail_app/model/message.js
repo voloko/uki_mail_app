@@ -29,3 +29,13 @@ uki_mail_app.model.Message = uki.newClass(uki.data.Model, function(Base) {
    };
    
 });
+
+uki_mail_app.model.Message.fetch = function(id, callback) {
+    uki.ajax({
+        url: '/message/' + id + '/?callback=?',
+        dataType: 'jsonp',
+        success: function(data) {
+            callback(new uki_mail_app.model.Message(data));
+        }
+    })
+};

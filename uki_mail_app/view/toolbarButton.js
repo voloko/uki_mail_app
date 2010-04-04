@@ -7,16 +7,20 @@ uki.view.declare('uki_mail_app.view.ToolbarButton', uki.view.Container, function
     }, this)
     
     this.label = function(html) {
-        if (html === undefined) return this._label.innerHTML;
+        if (html === undefined) return this._label.html();
         this._label.html(html).resizeToContents('width').layout();
         return this;
     };
     
     this.icon = uki.newProp('_icon', function(icon) {
         this._icon = icon;
-        this._button.html(
-            '<img src="' + icon + '" ondragstart="return false;" style="position:absolute;left:' + (this.rect().width - 29) / 2 + 'px;top:1px;" />'
-        );
+        var image = uki.createElement('img', 'position:absolute;top:1px');
+        image.ondragstart = function() {return false};
+        image.src = icon;
+        uki.image.load([image], uki.proxy(function() {
+            image.style.left = (this.rect().width - image.width)/2 + 'px';
+            this._button._label.appendChild(image);
+        }, this))
     });
     
     this.disabled = function(value) {
@@ -38,6 +42,7 @@ uki.view.declare('uki_mail_app.view.ToolbarButton', uki.view.Container, function
         
         this._label.bind('mousedown', uki.proxy(this._passEvent, this));
         this._label.bind('mouseleave', uki.proxy(this._passEvent, this));
+        this._label.bind('click', uki.proxy(this._passEvent, this));
         this._button._updateBg = uki.proxy(this._updateBg, this);
     }; 
     
