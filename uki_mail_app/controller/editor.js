@@ -97,6 +97,7 @@ uki_mail_app.controller.editor = function(action, messages) {
         },
         'new-message': function() {
             document.title = 'New Message';
+            uki('[field=to]', context).focus();
         }
     };
     actions['reply-all'] = actions['reply'];
