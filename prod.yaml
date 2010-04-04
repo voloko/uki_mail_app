@@ -1,0 +1,11 @@
+---
+  environment: production
+  address: 127.0.0.1
+  port: 5000
+  pid: prod.pid
+  rackup: prod.ru
+  log: prod.log
+  max_conns: 1024
+  timeout: 30
+  max_persistent_conns: 1024
+  daemonize: true
