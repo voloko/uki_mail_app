@@ -45,8 +45,9 @@ uki_mail_app.controller.main = function() {
 
         // load mail and meta
         if (indexes.length == 1) {
-            meta.visible(true).layout();
             var row = this.selectedRows()[0];
+            if (!row) return;
+            meta.visible(true).layout();
             fields.from.text(row.from() || '');
             fields.to.text(row.to() || '');
             fields.subject.text(row.subject() || '');
