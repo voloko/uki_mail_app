@@ -111,7 +111,7 @@ uki.view.declare('uki_mail_app.view.MessageTable', uki.view.Table, function(Base
         dt.effectAllowed = 'move';
         dt.setData('text/plain', uki.map(this.selectedRows(), 'summary').join('\n'));
         dt.setData('uki/messages', uki.map(this.selectedRows(), 'id').join(','));
-        dt.setData('uki/mailbox', this.mailbox().id());
+        dt.setData('uki/mailbox', this.mailbox().id() + '');
         dt.setDragImage(this.getDragImage(), 10, 10);
     };
     
