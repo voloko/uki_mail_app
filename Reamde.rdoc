@@ -1,0 +1,7 @@
+== How to install
+1. install and run redis (http://code.google.com/p/redis/)
+2. install uki-tools (http://github.com/voloko/uki-tools)
+3. 
+    git clone git://github.com/voloko/uki_mail_app.git
+    cd uki_mail_app
+    uki run
