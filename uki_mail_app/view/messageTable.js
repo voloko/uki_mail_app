@@ -30,10 +30,12 @@ uki.view.declare('uki_mail_app.view.MessageTable', uki.view.Table, function(Base
         this._mailbox = m;
         this.data(m.messages());
         m.bind('change.messages', uki.proxy(this._messagesChange, this));
+        this.trigger('change.messages');
     });
     
     this._messagesChange = function() {
         this.data(this.mailbox().messages());
+        this.trigger('change.messages');
     };
     
     this._createDom = function() {

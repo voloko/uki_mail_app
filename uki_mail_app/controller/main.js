@@ -66,6 +66,15 @@ uki_mail_app.controller.main = function() {
             }, 42)
         }
     });
+    
+    messageTable.bind('change.messages', function() {
+        var mailbox = messageTable[0].mailbox();
+        if (!mailbox) {
+            title.text('No Mailbox Selected');
+        } else {
+            title.html(mailbox.title() + ' &mdash; ' + MY_EMAIL + ' (' + mailbox.messages().length + ' messages)');
+        }
+    });
 
     // handle folder list selection
     var folders = uki('Folders', context);
@@ -73,12 +82,9 @@ uki_mail_app.controller.main = function() {
 
         // load messages in the inbox
         var mailbox = this.selectedRow();
-        if (!mailbox) {
-            title.text('No Mailbox Selected');
-        } else {
+        if (mailbox) {
             uki('ScrollPane', messageTable).attr('scrollTop', 0);
             messageTable[0].mailbox(mailbox).selectedIndexes(mailbox.messages().length ? [0] : []).lastClickIndex(0).focus();
-            title.html(mailbox.title() + ' &mdash; ' + MY_EMAIL + ' (' + mailbox.messages().length + ' messages)');
             if (!mailbox['loaded.messages']) mailbox.loadMessages(function() {
                 if (mailbox == folders[0].selectedRow()) {
                     // we should store visual state (column widths, selection, column names) for the mailbox 
@@ -92,7 +98,6 @@ uki_mail_app.controller.main = function() {
                     messageTable[0].header().redrawColumn(3);
 
                     messageTable[0].mailbox(this).selectedIndexes(this.messages().length ? [0] : []).lastClickIndex(0).focus();
-                    title.html(this.title() + ' &mdash; ' + MY_EMAIL + ' (' + this.messages().length + ' messages)');
                 }
             });
         }
@@ -110,7 +115,6 @@ uki_mail_app.controller.main = function() {
         'delete': function() {
             var messages = messageTable.selectedRows();
             if (messages.length) messages[0].mailbox().removeMessages(uki.map(messages, 'id'));
-            
         },
         'junk': function() {
             alert('Junk mail is not supported in this demo');
