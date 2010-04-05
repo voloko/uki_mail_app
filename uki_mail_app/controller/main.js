@@ -15,7 +15,7 @@ uki_mail_app.controller.main = function() {
     context.attachTo(window, '1000 1000');
 
     uki('#top', context).bind('mousedown', function(e) {
-        e.preventDefault();
+        if (e.target.tagName != 'INPUT') e.preventDefault();
     });
 
     // find all message meta fields
