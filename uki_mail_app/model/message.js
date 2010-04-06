@@ -24,6 +24,10 @@ uki_mail_app.model.Message = uki.newClass(uki.data.Model, function(Base) {
        return this.from().replace(/<[^>]+>/g, '').replace(/\s+/, ' ');
    };
    
+   this.toName = function() {
+       return this.to().replace(/<[^>]+>/g, '').replace(/\s+/, ' ');
+   };
+   
    this.summary = function() {
        return this.subject() + ' from ' + this.from();
    };

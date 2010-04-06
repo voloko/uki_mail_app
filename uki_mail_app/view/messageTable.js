@@ -28,6 +28,15 @@ uki.view.declare('uki_mail_app.view.MessageTable', uki.view.Table, function(Base
     this.mailbox = uki.newProp('_mailbox', function(m) {
         if (this._mailbox) this._mailbox.unbind('change.messages', this._messagesChange);
         this._mailbox = m;
+        
+        this.header().columns()[3]
+            .label(m.id() == 'SENT' ? 'Date Sent' : 'Date Recieved')
+        this.header().columns()[1]
+            .label(m.id() == 'SENT' ? 'To' : 'From')
+            .key(m.id() == 'SENT' ? 'toName' : 'fromName');
+        this.header().redrawColumn(1);
+        this.header().redrawColumn(3);
+        
         this.data(m.messages());
         m.bind('change.messages', uki.proxy(this._messagesChange, this));
         this.trigger('change.messages');

@@ -13,7 +13,7 @@ message = {
   :from => 'Vladimir Kolesnikov <voloko@gmail.com>',
   :to   => 'mail@ukijs.org',
   :subject => 'Hello World!',
-  :recieved => 1258946194,
+  :recieved => 1270178691,
   :attachments => 0
 }
 r.rpush 'mailbox:INBOX:messages', 1

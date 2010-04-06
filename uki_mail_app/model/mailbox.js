@@ -9,7 +9,7 @@ uki_mail_app.model.Mailbox = uki.newClass(uki.data.Model, function(Base) {
         Base.init.call(this, values);
     };
     
-    uki.data.model.addFields(this, ['unread', 'id', 'title', 'messages', 'children']);
+    uki.data.model.addFields(this, ['unread', 'id', 'title', 'messages', 'children', 'sortField']);
     
     var defaultIcons = {
         INBOX: 'mb-inbox',
@@ -60,9 +60,9 @@ uki_mail_app.model.Mailbox = uki.newClass(uki.data.Model, function(Base) {
     
     this.loadMessages = this.loadNewMessages;
     
-    this.sortByDate = function(fieldName) {
-        this._messages = this._messages.sort(function(a, b) {
-            return a.recieved()*1 - b.recieved()*1;
+    this._sortBy = function(fieldName) {
+        this._messages = this._messages.sort(function(b, a) {
+            return a[fieldName]()*1 - b[fieldName]()*1;
         });
     };
     
@@ -73,6 +73,7 @@ uki_mail_app.model.Mailbox = uki.newClass(uki.data.Model, function(Base) {
             messages[i].mailbox(this);
             messages[i].bind('change.unread', this._unreadChangeHandler);
         };
+        if (this.sortField()) this._sortBy(this.sortField());
         this.trigger('change.messages');
         this._updateCounts(messages);
     };
@@ -89,6 +90,7 @@ uki_mail_app.model.Mailbox = uki.newClass(uki.data.Model, function(Base) {
            removed.push(m);
            return false;
         }, this);
+        if (this.sortField()) this._sortBy(this.sortField());
         this.trigger('change.messages');
         this._updateCounts();
         return removed;

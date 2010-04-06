@@ -75,7 +75,7 @@ uki_mail_app.controller.main = function() {
             title.html(mailbox.title() + ' &mdash; ' + MY_EMAIL + ' (' + mailbox.messages().length + ' messages)');
         }
     });
-
+    
     // handle folder list selection
     var folders = uki('Folders', context);
     folders.bind('selection', function() {
@@ -85,18 +85,11 @@ uki_mail_app.controller.main = function() {
         if (mailbox) {
             uki('ScrollPane', messageTable).attr('scrollTop', 0);
             messageTable[0].mailbox(mailbox).selectedIndexes(mailbox.messages().length ? [0] : []).lastClickIndex(0).focus();
+            
             if (!mailbox['loaded.messages']) mailbox.loadMessages(function() {
                 if (mailbox == folders[0].selectedRow()) {
                     // we should store visual state (column widths, selection, column names) for the mailbox 
                     // and restore it here. For test purposes change the label only
-                    messageTable[0].header().columns()[3]
-                        .label(mailbox.id() == 'SENT' ? 'Date Sent' : 'Date Recieved')
-                    messageTable[0].header().columns()[1]
-                        .label(mailbox.id() == 'SENT' ? 'To' : 'From')
-                        .key(mailbox.id() == 'SENT' ? 'to' : 'from');
-                    messageTable[0].header().redrawColumn(1);
-                    messageTable[0].header().redrawColumn(3);
-
                     messageTable[0].mailbox(this).selectedIndexes(this.messages().length ? [0] : []).lastClickIndex(0).focus();
                 }
             });
@@ -144,6 +137,7 @@ uki_mail_app.controller.main = function() {
     // load up initial mailbox structure
     function createMailbox (data) {
         if (data.children) data.children = uki.map(data.children, createMailbox);
+        data.sortField = 'recieved';
         return new uki_mail_app.model.Mailbox(data);
     }
 
