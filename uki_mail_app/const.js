@@ -5,7 +5,7 @@ function findMailboxById (id, mboxes) {
     mboxes = mboxes || MAILBOXES;
     for (var i = mboxes.length - 1; i >= 0; i--){
         if (mboxes[i].children()) {
-            var tmp = findMailboxById(id, mboxes[i]);
+            var tmp = findMailboxById(id, mboxes[i].children());
             if (tmp) return tmp;
         }
         if (mboxes[i].id() == id) return mboxes[i];

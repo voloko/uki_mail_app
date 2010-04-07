@@ -150,6 +150,7 @@ uki.view.declare('uki_mail_app.view.Folders', uki.view.VFlow, function(Base) {
     };
     
     this._drop = function(e) {
+        debugger;
         e.preventDefault();
         var mailbox  = e.dataTransfer.getData('uki/mailbox'),
             messages = e.dataTransfer.getData('uki/messages').split(',');
