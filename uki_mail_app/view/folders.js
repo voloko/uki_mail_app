@@ -159,7 +159,6 @@ uki.view.declare('uki_mail_app.view.Folders', uki.view.VFlow, function(Base) {
         if (mailbox && messages && messages.length && this._lastRow) {
             messages = mailbox.removeMessages(messages);
             this._lastRow.addMessages(0, messages);
-            this._lastRow.sortByDate();
         }
     }
     
