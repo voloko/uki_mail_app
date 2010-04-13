@@ -85,7 +85,7 @@ uki.view.declare('uki_mail_app.view.Folders', uki.view.VFlow, function(Base) {
     
     this._createDom = function() {
         Base._createDom.call(this);
-        uki.dom.bind(doc.body, 'mouseup drop dragend', uki.proxy(this._dragend, this));
+        uki.dom.bind(doc.body, 'mouseup drop' + (uki.dom.dnd.nativeDnD ? ' dragend' : '') , uki.proxy(this._dragend, this));
         uki.dom.bind(doc.body, 'dragenter', uki.proxy(this._dragenter, this));
         uki.dom.bind(this.dom(), 'dragenter', uki.proxy(this._dragenter, this));
         this.dropPreview().bind('dragover', function(e) {
@@ -150,7 +150,6 @@ uki.view.declare('uki_mail_app.view.Folders', uki.view.VFlow, function(Base) {
     };
     
     this._drop = function(e) {
-        debugger;
         e.preventDefault();
         var mailbox  = e.dataTransfer.getData('uki/mailbox'),
             messages = e.dataTransfer.getData('uki/messages').split(',');

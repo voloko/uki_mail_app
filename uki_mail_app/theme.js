@@ -171,7 +171,7 @@
             },
             
             'value': function() {
-                return new uki.background.Css({ fontFamily: uki.theme.style('fontFamily') } );
+                return new uki.background.Css({ fontFamily: uki.theme.style('fontFamily'), cursor: 'text' } );
             }
         },
         

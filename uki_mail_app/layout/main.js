@@ -120,7 +120,7 @@ uki_mail_app.layout.main = function() {
                       ] 
                     },
                     { view: 'Label', rect: '0 80 749 100', anchors: 'left top right', text: 'content', multiline: true, inset: '5 10',
-                        id: 'content', textSelectable: true }
+                        id: 'content', textSelectable: true, style: { cursor: 'text' } }
                 ] }
               ]
             }
